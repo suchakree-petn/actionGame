@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour, IDamageable
 {
@@ -11,6 +12,7 @@ public class Player : MonoBehaviour, IDamageable
     public bool Is_stun = false;
     public bool Is_onCD = false;
     public bool Is_KnockBack = false;
+    public bool Is_immortal;
 
 
 
@@ -22,9 +24,12 @@ public class Player : MonoBehaviour, IDamageable
     public player_attack player_Attack;
     public PlayerInput playerInput;
     public PlayerInputActions playerInputActions;
-    public bool Is_immortal;
-    [SerializeField] List<GameObject> JoyStick;
-    [SerializeField] GameOver gameOver;
+    [SerializeField] GameObject JoyStickLeft;
+    [SerializeField] GameObject JoyStickRight;
+    [SerializeField] GameObject skill;
+    public GameOver gameOver;
+    public GameObject playerHP_Mana;
+    public GameObject parryGauge;
 
     void Awake()
     {
@@ -39,10 +44,7 @@ public class Player : MonoBehaviour, IDamageable
         EnableMovePlayerInput();
         EnableAttackPlayerInput();
     }
-    void Update()
-    {
 
-    }
     public void Do_Immortal(float sec)
     {
         StartCoroutine(Immortal(sec));
@@ -116,24 +118,61 @@ public class Player : MonoBehaviour, IDamageable
             EnableJoyStick();
             StartCoroutine(IEnum.KBDelay(this.gameObject));
         }
-
-
     }
-    void EnableJoyStick()
+    public void EnableJoyStick()
     {
-        foreach (GameObject go in JoyStick)
-        {
-            go.SetActive(false);
-        }
+        EnableJoyStickLeft();
+        EnableJoyStickRight();
     }
-    void DisableJoyStick()
+    public void DisableJoyStick()
     {
-        foreach (GameObject go in JoyStick)
-        {
-            go.SetActive(false);
-        }
+        DisableJoyStickLeft();
+        DisableJoyStickRight();
     }
+    public void EnableJoyStickLeft()
+    {
+        JoyStickLeft.GetComponent<Image>().enabled = true;
+    }
+    public void DisableJoyStickLeft()
+    {
+        JoyStickLeft.GetComponent<Image>().enabled = false;
+    }
+    public void EnableJoyStickRight()
+    {
+        JoyStickRight.SetActive(true);
 
+    }
+    public void DisableJoyStickRight()
+    {
+        JoyStickRight.SetActive(false);
+
+    }
+    public void EnableSkill()
+    {
+        skill.SetActive(true);
+
+    }
+    public void DisableSkill()
+    {
+        skill.SetActive(false);
+
+    }
+    public void EnableHP_Mana()
+    {
+        playerHP_Mana.SetActive(true);
+    }
+    public void DisableHP_Mana()
+    {
+        playerHP_Mana.SetActive(false);
+    }
+    public void DisableParryGauge()
+    {
+        parryGauge.SetActive(false);
+    }
+    public void EnableParryGauge()
+    {
+        parryGauge.SetActive(true);
+    }
     void AfterKnockBack()
     {
         Is_KnockBack = false;

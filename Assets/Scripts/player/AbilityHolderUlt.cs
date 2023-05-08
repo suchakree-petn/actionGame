@@ -28,7 +28,7 @@ public class AbilityHolderUlt : MonoBehaviour
 
     void Update()
     {
-
+       
         switch (state)
         {
             case AbilityState.ready:

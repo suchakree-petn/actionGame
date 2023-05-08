@@ -45,6 +45,7 @@ public class AbilityHolderRepeat : MonoBehaviour
     void Update()
     {
 
+
         Vector2 mousePos = (Vector2)cam.ScreenToWorldPoint(Input.mousePosition);
         if (Is_selecting)
         {
@@ -85,8 +86,10 @@ public class AbilityHolderRepeat : MonoBehaviour
                     Selecting();
                     button.interactable = false;
 
-                }else{
-                    Is_performed =false;
+                }
+                else
+                {
+                    Is_performed = false;
                 }
                 break;
             case AbilityState.active:
@@ -120,17 +123,17 @@ public class AbilityHolderRepeat : MonoBehaviour
             sampleArea.transform.position = mousePos;
         }
     }
-    public void Is_Performed(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            Is_performed = true;
-        }
-        else if (context.canceled)
-        {
-            Is_performed = false;
-        }
-    }
+    // public void Is_Performed(InputAction.CallbackContext context)
+    // {
+    //     if (context.performed)
+    //     {
+    //         Is_performed = true;
+    //     }
+    //     else if (context.canceled)
+    //     {
+    //         Is_performed = false;
+    //     }
+    // }
     public void Is_Performed()
     {
         Is_performed = true;

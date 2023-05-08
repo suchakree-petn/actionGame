@@ -8,7 +8,7 @@ public class Pri_magicBall : MonoBehaviour
     public float moveSpd = 1f;
     [SerializeField] private float dmg = 20f;
     public float knockBackRange;
-    [SerializeField] private float selfDestructTime = 2f;
+    public float selfDestructTime = 2f;
     public float hit_cd = 1f;
     public int penetrateCount;
     public GameObject player;
@@ -30,6 +30,10 @@ public class Pri_magicBall : MonoBehaviour
         if (penetrateCount > 0)
         {
             IDamageable damageable = other.GetComponent<IDamageable>();
+            if (damageable == null)
+            {
+                Debug.Log("null");
+            }
             if (damageable != null && (!other.CompareTag("Player")))
             {
                 damageable.DamageReceive(this.dmg);
@@ -44,7 +48,7 @@ public class Pri_magicBall : MonoBehaviour
     {
         if (penetrateCount <= 0)
         {
-            
+
             Destroy(gameObject);
         }
     }

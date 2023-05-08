@@ -10,7 +10,7 @@ public class RewardedAd : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLis
 {
     [SerializeField] Button _showAdButton;
     [SerializeField] string _androidAdUnitId = "Rewarded_Android";
-    [SerializeField] string _iOSAdUnitId = "Rewarded_iOS";
+    //[SerializeField] string _iOSAdUnitId = "Rewarded_iOS";
     string _adUnitId = null; // This will remain null for unsupported platforms
     Coroutine runningCoroutine;
     bool Is_Coroutine = true;
@@ -32,7 +32,6 @@ public class RewardedAd : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLis
     void Start()
     {
         LoadAd();
-        //resultUI = GameObject.Find("Canvas/ResultUI");
         runningCoroutine = StartCoroutine(AdCoroutine());
     }
     void Update()
@@ -93,11 +92,20 @@ public class RewardedAd : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLis
             Debug.Log("Unity Ads Rewarded Ad Completed");
             // Grant a reward.
             Time.timeScale = 1;
-            // player.hp = player.player_max_hp;
-            // player.Is_player_die = false;
-            // player.SetHp();
-            // resultUI.SetActive(false);
-            SceneManager.LoadScene(1);
+            player.hp = player.player_max_hp;
+            player.Is_player_die = false;
+            player.SetHp();
+            GameObject resultUI = GameObject.FindWithTag("ResultUI");
+            if (resultUI != null)
+            {
+                resultUI.SetActive(false);
+            }
+            else
+            {
+                Debug.Log("ResultUI is null");
+            }
+
+            //SceneManager.LoadScene(1);
             // Load another ad:
             Advertisement.Load(_adUnitId, this);
         }

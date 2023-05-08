@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 3045854968092710271}
   - component: {fileID: 3045854968092710268}
   - component: {fileID: 3045854968092710270}
+  - component: {fileID: -6552530563975536885}
   m_Layer: 0
   m_Name: barrierPrefap
-  m_TagString: Untagged
+  m_TagString: Barrier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,3 +99,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireBlast: {fileID: 11400000, guid: 267d5a0f9b9abfa4b9ff49c08b5cfc79, type: 2}
+--- !u!58 &-6552530563975536885
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3045854968092710208}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.6855578

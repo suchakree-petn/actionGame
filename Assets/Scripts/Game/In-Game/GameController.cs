@@ -4,88 +4,81 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class GameController : MonoBehaviour
 {
     [SerializeField] private int fps = 144;
     [SerializeField] private int enemyAmount;
+    [SerializeField] private int skeletonAmount;
+    [SerializeField] private int enemyAmount_temp;
+    [SerializeField] private int skeletonAmount_temp;
     private Vector3 Player_Hp_Bar_Pos;
     [SerializeField] private Vector3 Enemy_Hp_Bar_Pos_Offset;
     [SerializeField] private Vector2 Enemy_SpawnPoint;
     [SerializeField] private Player player;
     [SerializeField] private GameObject EnemyGroup;
     [SerializeField] private GameObject enemy;
+    [SerializeField] private GameObject Skeleton;
     [SerializeField] private GameObject Hp_Bar;
     [SerializeField] private GameObject Player_Hp_Bar;
-    //[SerializeField] private RewardedAd rewardedAd;
     public TMP_Text Coin_txt;
     public TMP_Text Objective_txt;
     public int Objective_amount;
     public int Coin;
     public List<GameObject> EnemyList;
-
+    public GameObject NextStagePortal;
 
 
 
     void Awake()
     {
-
+        enemyAmount_temp = enemyAmount;
+        skeletonAmount_temp = skeletonAmount;
     }
     void Start()
     {
         Application.targetFrameRate = fps;
         Player_Hp_Bar.GetComponent<Slider>().maxValue = player.hp;
         Player_Hp_Bar.GetComponent<Slider>().value = player.hp;
-        //EnemyGroup = GameObject.Find("EnemyGroup");
-
+        NextStagePortal.SetActive(false);
     }
     void Update()
     {
-        if (EnemyList.Count <= enemyAmount - 1)
+        if (EnemyList.Count < enemyAmount_temp + skeletonAmount_temp && Objective_amount >= 0)
+        {
+            int rand = Random.Range(1, 3);
+            Debug.Log(rand + "   Random");
+            if (rand == 1)
+            {
+                enemyAmount++;
+                SpawnEnemy(enemy, ref enemyAmount);
+            }
+            else if (rand == 2)
+            {
+                skeletonAmount++;
+                SpawnEnemy(Skeleton, ref skeletonAmount);
+            }
+        }
+        else if (Objective_amount == 0)
+        {
+            NextStagePortal.SetActive(true);
+        }
+    }
+    void SpawnEnemy(GameObject enemy, ref int enemyAmount)
+    {
+        if (enemyAmount > 0)
         {
             float angle = Random.Range(0, 360);
             float radias = 8f;
             float x = Mathf.Cos(angle) * radias;
             float y = Mathf.Sin(angle) * radias;
             Enemy_SpawnPoint = new Vector2(x + player.transform.position.x, y + player.transform.position.y);
-            InstantiateEnemy(Enemy_SpawnPoint);
+            InstantiateEnemy(Enemy_SpawnPoint, enemy);
+            enemyAmount--;
         }
-
     }
-
-    // void OnGUI()
-    // {
-    //     Event e = Event.current;
-    //     if (e.isKey)
-    //     {
-    //         if (
-    //             e.keyCode == KeyCode.W &&
-    //             e.keyCode == KeyCode.A &&
-    //             e.keyCode == KeyCode.S &&
-    //             e.keyCode == KeyCode.D
-    //             )
-    //         {
-    //             player.GetComponent<player_movement>().EnableMove();
-    //         }
-
-    //     }
-    // }
-    // void InstantiatePlayer()
-    // {
-
-    //     GameObject Player = Instantiate(player,
-    //                         player.transform.position,
-    //                         player.transform.rotation,
-    //                         PlayerGroup.transform
-    //                         );
-    //     GameObject Canvas = GameObject.Find("Canvas/Player_Hp_Bar");
-    //     Instantiate(Hp_Bar,
-    //                 Player_Hp_Bar_Pos,
-    //                 Hp_Bar.transform.rotation,
-    //                 Canvas.transform
-    //                 );
-    // }
-    GameObject InstantiateEnemy(Vector2 Enemy_SpawnPoint)
+    GameObject InstantiateEnemy(Vector2 Enemy_SpawnPoint, GameObject enemy)
     {
 
         GameObject Enemy = Instantiate(enemy,
@@ -93,11 +86,20 @@ public class GameController : MonoBehaviour
                             Quaternion.identity,
                             EnemyGroup.transform
                             );
-
-        Enemy.GetComponent<Enemy>().Enemy_Hp = Instantiate_Hp_Bar(Enemy);
-        Enemy.GetComponent<Enemy>().Enemy_Hp.SetActive(false);
-        EnemyList.Add(Enemy);
-        return Enemy;
+        if (Enemy.name == "enemy(Clone)")
+        {
+            Enemy.GetComponent<Enemy>().Enemy_Hp = Instantiate_Hp_Bar(Enemy);
+            Enemy.GetComponent<Enemy>().Enemy_Hp.SetActive(false);
+            EnemyList.Add(Enemy);
+            return Enemy;
+        }
+        else
+        {
+            Enemy.GetComponentInChildren<EnemyState>().Enemy_Hp = Instantiate_Hp_Bar(Enemy);
+            Enemy.GetComponentInChildren<EnemyState>().Enemy_Hp.SetActive(false);
+            EnemyList.Add(Enemy);
+            return Enemy;
+        }
     }
     GameObject Instantiate_Hp_Bar(GameObject Enemy)
     {
@@ -106,10 +108,20 @@ public class GameController : MonoBehaviour
                             Quaternion.identity,
                             GameObject.Find("Canvas/Enemy_Hp_Bar").transform
                             );
-        hp_Bar.GetComponent<Slider>().maxValue = Enemy.GetComponent<Enemy>().hp;
-        hp_Bar.GetComponent<Slider>().value = Enemy.GetComponent<Enemy>().hp;
-        hp_Bar.transform.localScale -= new Vector3(0.7f, 0.7f, 0.7f);
-        return hp_Bar;
+        if (Enemy.name == "enemy(Clone)")
+        {
+            hp_Bar.GetComponent<Slider>().maxValue = Enemy.GetComponent<Enemy>().hp;
+            hp_Bar.GetComponent<Slider>().value = Enemy.GetComponent<Enemy>().hp;
+            hp_Bar.transform.localScale -= new Vector3(0.7f, 0.7f, 0.7f);
+            return hp_Bar;
+        }
+        else
+        {
+            hp_Bar.GetComponent<Slider>().maxValue = Enemy.GetComponentInChildren<EnemyState>().hp;
+            hp_Bar.GetComponent<Slider>().value = Enemy.GetComponentInChildren<EnemyState>().hp;
+            hp_Bar.transform.localScale -= new Vector3(0.7f, 0.7f, 0.7f);
+            return hp_Bar;
+        }
     }
 
     public void AddCoin(int value)
@@ -130,7 +142,8 @@ public class GameController : MonoBehaviour
 
     }
 
-    public void ReloadScene(){
+    public void ReloadScene()
+    {
         SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
 }

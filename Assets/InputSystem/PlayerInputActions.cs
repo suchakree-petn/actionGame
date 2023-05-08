@@ -118,24 +118,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Skill01"",
-                    ""type"": ""Button"",
-                    ""id"": ""9cdf7a3e-1357-484b-afd4-93f7292b2202"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Skill02"",
-                    ""type"": ""Button"",
-                    ""id"": ""6f1fb499-fc6d-43b7-8d69-f2d364db1305"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -160,28 +142,138 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""PriAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Player"",
+            ""id"": ""7d7f6638-94c3-44a8-881c-aab1ed47943c"",
+            ""actions"": [
+                {
+                    ""name"": ""PrimaryContact"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""780a4b5c-8348-47aa-81d0-bfd07bb8506f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""07119678-5b1f-41a3-86e5-373e08c88d7f"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
+                    ""name"": ""PrimaryPosition"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""edc98f5f-ed8c-418f-8b0b-d2dfab36d5a0"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
-                    ""groups"": ""KeyMouse"",
-                    ""action"": ""Skill01"",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Button"",
+                    ""id"": ""74db9f32-808b-4601-9bc1-8a6381e42a93"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""bf12566d-8455-4c56-b32c-31353c822647"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""2244e6dc-249a-4e36-a7f1-2fd52965ba29"",
+                    ""path"": ""<Touchscreen>/primaryTouch/press"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""Touch;KeyMouse"",
+                    ""action"": ""PrimaryContact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""dab5f233-75ec-473a-b6e6-bfbe96f41604"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""id"": ""79e1baf2-b4e0-4d7e-943d-dabf65d5ad37"",
+                    ""path"": ""<Touchscreen>/primaryTouch/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyMouse;Touch"",
+                    ""action"": ""PrimaryPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""70230579-7712-403d-be5a-a8462b34fc1b"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""7c9f1844-819a-434e-84a7-ea39432e4820"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyMouse"",
-                    ""action"": ""Skill02"",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""3621c44b-106d-4339-839f-1fd455307adc"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyMouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""d4f58837-36b9-44b2-9c19-5ec25da0a066"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": true,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""1d51fa33-7966-4fae-9e5f-a036fc4f5474"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""d705b8e3-9a56-4c18-9998-edc0c8152034"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyMouse"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -217,8 +309,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         // Player_Attack
         m_Player_Attack = asset.FindActionMap("Player_Attack", throwIfNotFound: true);
         m_Player_Attack_PriAttack = m_Player_Attack.FindAction("PriAttack", throwIfNotFound: true);
-        m_Player_Attack_Skill01 = m_Player_Attack.FindAction("Skill01", throwIfNotFound: true);
-        m_Player_Attack_Skill02 = m_Player_Attack.FindAction("Skill02", throwIfNotFound: true);
+        // Player
+        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
+        m_Player_PrimaryContact = m_Player.FindAction("PrimaryContact", throwIfNotFound: true);
+        m_Player_PrimaryPosition = m_Player.FindAction("PrimaryPosition", throwIfNotFound: true);
+        m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -312,15 +408,11 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player_Attack;
     private IPlayer_AttackActions m_Player_AttackActionsCallbackInterface;
     private readonly InputAction m_Player_Attack_PriAttack;
-    private readonly InputAction m_Player_Attack_Skill01;
-    private readonly InputAction m_Player_Attack_Skill02;
     public struct Player_AttackActions
     {
         private @PlayerInputActions m_Wrapper;
         public Player_AttackActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @PriAttack => m_Wrapper.m_Player_Attack_PriAttack;
-        public InputAction @Skill01 => m_Wrapper.m_Player_Attack_Skill01;
-        public InputAction @Skill02 => m_Wrapper.m_Player_Attack_Skill02;
         public InputActionMap Get() { return m_Wrapper.m_Player_Attack; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -333,12 +425,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @PriAttack.started -= m_Wrapper.m_Player_AttackActionsCallbackInterface.OnPriAttack;
                 @PriAttack.performed -= m_Wrapper.m_Player_AttackActionsCallbackInterface.OnPriAttack;
                 @PriAttack.canceled -= m_Wrapper.m_Player_AttackActionsCallbackInterface.OnPriAttack;
-                @Skill01.started -= m_Wrapper.m_Player_AttackActionsCallbackInterface.OnSkill01;
-                @Skill01.performed -= m_Wrapper.m_Player_AttackActionsCallbackInterface.OnSkill01;
-                @Skill01.canceled -= m_Wrapper.m_Player_AttackActionsCallbackInterface.OnSkill01;
-                @Skill02.started -= m_Wrapper.m_Player_AttackActionsCallbackInterface.OnSkill02;
-                @Skill02.performed -= m_Wrapper.m_Player_AttackActionsCallbackInterface.OnSkill02;
-                @Skill02.canceled -= m_Wrapper.m_Player_AttackActionsCallbackInterface.OnSkill02;
             }
             m_Wrapper.m_Player_AttackActionsCallbackInterface = instance;
             if (instance != null)
@@ -346,16 +432,67 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @PriAttack.started += instance.OnPriAttack;
                 @PriAttack.performed += instance.OnPriAttack;
                 @PriAttack.canceled += instance.OnPriAttack;
-                @Skill01.started += instance.OnSkill01;
-                @Skill01.performed += instance.OnSkill01;
-                @Skill01.canceled += instance.OnSkill01;
-                @Skill02.started += instance.OnSkill02;
-                @Skill02.performed += instance.OnSkill02;
-                @Skill02.canceled += instance.OnSkill02;
             }
         }
     }
     public Player_AttackActions @Player_Attack => new Player_AttackActions(this);
+
+    // Player
+    private readonly InputActionMap m_Player;
+    private IPlayerActions m_PlayerActionsCallbackInterface;
+    private readonly InputAction m_Player_PrimaryContact;
+    private readonly InputAction m_Player_PrimaryPosition;
+    private readonly InputAction m_Player_Move;
+    private readonly InputAction m_Player_Jump;
+    public struct PlayerActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @PrimaryContact => m_Wrapper.m_Player_PrimaryContact;
+        public InputAction @PrimaryPosition => m_Wrapper.m_Player_PrimaryPosition;
+        public InputAction @Move => m_Wrapper.m_Player_Move;
+        public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputActionMap Get() { return m_Wrapper.m_Player; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
+        public void SetCallbacks(IPlayerActions instance)
+        {
+            if (m_Wrapper.m_PlayerActionsCallbackInterface != null)
+            {
+                @PrimaryContact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPrimaryContact;
+                @PrimaryContact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPrimaryContact;
+                @PrimaryContact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPrimaryContact;
+                @PrimaryPosition.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPrimaryPosition;
+                @PrimaryPosition.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPrimaryPosition;
+                @PrimaryPosition.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPrimaryPosition;
+                @Move.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
+                @Move.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
+                @Move.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
+                @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+            }
+            m_Wrapper.m_PlayerActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @PrimaryContact.started += instance.OnPrimaryContact;
+                @PrimaryContact.performed += instance.OnPrimaryContact;
+                @PrimaryContact.canceled += instance.OnPrimaryContact;
+                @PrimaryPosition.started += instance.OnPrimaryPosition;
+                @PrimaryPosition.performed += instance.OnPrimaryPosition;
+                @PrimaryPosition.canceled += instance.OnPrimaryPosition;
+                @Move.started += instance.OnMove;
+                @Move.performed += instance.OnMove;
+                @Move.canceled += instance.OnMove;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
+            }
+        }
+    }
+    public PlayerActions @Player => new PlayerActions(this);
     private int m_KeyMouseSchemeIndex = -1;
     public InputControlScheme KeyMouseScheme
     {
@@ -381,7 +518,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     public interface IPlayer_AttackActions
     {
         void OnPriAttack(InputAction.CallbackContext context);
-        void OnSkill01(InputAction.CallbackContext context);
-        void OnSkill02(InputAction.CallbackContext context);
+    }
+    public interface IPlayerActions
+    {
+        void OnPrimaryContact(InputAction.CallbackContext context);
+        void OnPrimaryPosition(InputAction.CallbackContext context);
+        void OnMove(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
 }

@@ -12,11 +12,11 @@ public class Enemy : MonoBehaviour, IDamageable
     public enemy_attack_1 enemy_Attack_1;
     public float hp = 100;
     public Player player;
-    [SerializeField] private bool Is_KnockBack;
+    //[SerializeField] private bool Is_KnockBack;
     [SerializeField] Vector3 Player_Pos;
     //[SerializeField] private bool Is_Die = false;
     [SerializeField] private GameObject canvas;
-    [SerializeField] private GameController gameController;
+    public GameController gameController;
     public AudioSource audioSource;
     void Awake()
     {
@@ -42,6 +42,7 @@ public class Enemy : MonoBehaviour, IDamageable
     
     public void DamageReceive(float dmg)
     {
+        animator.SetTrigger("Hit");
         hp -= dmg;
         audioSource.Play();
         animator.SetBool("Is_attack", false);
@@ -53,25 +54,16 @@ public class Enemy : MonoBehaviour, IDamageable
         Enemy_Hp.GetComponent<Slider>().value = hp;
         if (hp <= 0)
         {
-            //Is_Die = true;
             OnDie();
         }
     }
     private void OnDie()
     {
-        Destroy(Enemy_Hp);
-        gameController.EnemyList.Remove(gameObject);
-        Debug.Log("Now count: " + gameController.EnemyList.Count);
         animator.SetBool("Dead",true);
-        gameController.AddCoin(5);
-        gameController.AddObjectiveAmount(1);
-        Destroy(this.gameObject);
-
-
     }
     public void knockBack(GameObject attacker, float knockBackRange)
     {
-        Is_KnockBack = true;
+        //Is_KnockBack = true;
         Vector3 attacker_Pos = Player_Pos;
         Vector3 target_Pos = transform.position;
         Vector2 direction = target_Pos - attacker_Pos;
@@ -84,14 +76,14 @@ public class Enemy : MonoBehaviour, IDamageable
     void AfterKnockBack()
     {
         //animator.SetBool("Can_attack", true);
-        Is_KnockBack = false;
+        //Is_KnockBack = false;
     }
     public void check_atk_range(float currentDistance, float atk_range)
     {
         if (currentDistance <= atk_range && animator.GetBool("Is_attack") == false && animator.GetBool("Can_attack")==true)
         {
             animator.SetBool("Is_attack", true);
-            animator.SetTrigger("Attack_1");
+            animator.SetTrigger("PrepAttack");
         }
 
     }

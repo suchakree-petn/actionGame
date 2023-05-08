@@ -82,10 +82,20 @@ public class parryGauge : MonoBehaviour
     }
     IEnumerator DelayRestoreCamSize()
     {
-        cam.orthographicSize = 5f;
-        Time.timeScale = 0f;
-        yield return new WaitForSecondsRealtime(.7f);
-        Time.timeScale = 1f;
-        cam.orthographicSize = 6.5f;
+        if (cam.name != "ZoomOutCam")
+        {
+            cam.orthographicSize = 5f;
+            Time.timeScale = 0f;
+            yield return new WaitForSecondsRealtime(.7f);
+            Time.timeScale = 1f;
+            cam.orthographicSize = 6.5f;
+        }
+        else
+        {
+            Time.timeScale = 0f;
+            yield return new WaitForSecondsRealtime(.7f);
+            Time.timeScale = 1f;
+        }
+
     }
 }

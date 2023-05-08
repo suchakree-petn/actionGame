@@ -35,7 +35,6 @@ public class Player_Mana : MonoBehaviour
     {
         mana += value;
         UpdatePlayerMana();
-        Debug.Log(mana+value);
     }
 
 }

@@ -10,10 +10,12 @@ public class CameraFollow : MonoBehaviour
     void Start()
     {
 
-        target = GameObject.Find("PlayerGroup/player").transform;
+        target = GameObject.FindWithTag("Player").transform;
     }
     void FixedUpdate()
     {
+        if (target == null) { return; }
+
         Vector3 new_Pos = new Vector3(target.position.x, target.position.y, -10f);
         transform.position = Vector3.Slerp(transform.position, new_Pos, cam_speed * Time.deltaTime);
         //transform.position = new_Pos;

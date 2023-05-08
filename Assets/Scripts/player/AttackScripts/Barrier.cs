@@ -5,6 +5,10 @@ using UnityEngine;
 public class Barrier : MonoBehaviour
 {
     [SerializeField] FireBlast fireBlast;
+    void Start()
+    {
+        gameObject.name = "Barrier";
+    }
     void Update()
     {
         if (fireBlast.Is_AttackedWhileParry)
