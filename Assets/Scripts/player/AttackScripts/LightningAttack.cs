@@ -17,9 +17,10 @@ public class LightningAttack : MonoBehaviour
         IDamageable damageable = other.GetComponent<IDamageable>();
         if (damageable != null && (!other.CompareTag("Player")))
         {
+            ScreenShake.Shake();
             damageable.DamageReceive(lighningWeapon.dmg);
             damageable.knockBack(gameObject, lighningWeapon.knockBackRange);
-            StartCoroutine(IEnum.IFrame(GetComponent<Collider2D>(), other,hit_cd));
+            StartCoroutine(IEnum.IFrame(GetComponent<Collider2D>(), other, hit_cd));
         }
     }
 }

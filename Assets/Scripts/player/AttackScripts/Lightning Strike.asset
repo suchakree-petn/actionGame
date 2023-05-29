@@ -13,14 +13,13 @@ MonoBehaviour:
   m_Name: Lightning Strike
   m_EditorClassIdentifier: 
   name: LightningStrike
-  cd_time: 12
+  cd_time: 15
   active_time: 0.3
-  repeat: 6
+  repeat: 4
   Is_Parry: 0
   repeat_time: 0
   in_active_time: 0
   delayButton: 0
   LightningPrefab: {fileID: 783701345236144668, guid: c646d0f21b706454b8579e48751c74b3, type: 3}
   scaleCount: 0
-  lightningColor: {r: 0, g: 0.1639204, b: 1, a: 255}
-  localScale: {x: 3, y: 3, z: 0}
+  localScale: {x: 4, y: 4, z: 0}

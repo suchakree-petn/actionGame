@@ -16,8 +16,6 @@ public class enemy_attack_1 : MonoBehaviour
     public GameObject enemy_attack_1_prefab;
 
 
-
-    //[SerializeField] enemy_attack_1 enemy_Attack_1;
     [SerializeField] FireBlast fireBlast;
     public Enemy enemy;
     public float stunTime = 2f;

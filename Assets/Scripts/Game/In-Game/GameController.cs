@@ -5,50 +5,56 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using System.Linq;
 
 public class GameController : MonoBehaviour
 {
     [SerializeField] private int fps = 144;
-    [SerializeField] private int enemyAmount;
-    [SerializeField] private int skeletonAmount;
-    [SerializeField] private int enemyAmount_temp;
-    [SerializeField] private int skeletonAmount_temp;
+    public int enemyAmount;
+    public int skeletonAmount;
+    public int enemyAmount_temp;
+    public int skeletonAmount_temp;
     private Vector3 Player_Hp_Bar_Pos;
     [SerializeField] private Vector3 Enemy_Hp_Bar_Pos_Offset;
-    [SerializeField] private Vector2 Enemy_SpawnPoint;
-    [SerializeField] private Player player;
+    [SerializeField] private List<Vector2> Enemy_SpawnPoint;
+    public Player player;
     [SerializeField] private GameObject EnemyGroup;
-    [SerializeField] private GameObject enemy;
-    [SerializeField] private GameObject Skeleton;
+    public GameObject enemy;
+    public GameObject Skeleton;
     [SerializeField] private GameObject Hp_Bar;
     [SerializeField] private GameObject Player_Hp_Bar;
     public TMP_Text Coin_txt;
     public TMP_Text Objective_txt;
+    public TMP_Text stageLevel_txt;
     public int Objective_amount;
     public int Coin;
+    public int floor;
     public List<GameObject> EnemyList;
     public GameObject NextStagePortal;
-
-
+    public GameObject gate;
+    public GameObject Buff;
+    public GameObject EnemyHP;
 
     void Awake()
     {
+        UnityEngine.Rendering.DebugManager.instance.enableRuntimeUI = false;
         enemyAmount_temp = enemyAmount;
         skeletonAmount_temp = skeletonAmount;
     }
     void Start()
     {
+        floor = 1;
         Application.targetFrameRate = fps;
         Player_Hp_Bar.GetComponent<Slider>().maxValue = player.hp;
         Player_Hp_Bar.GetComponent<Slider>().value = player.hp;
         NextStagePortal.SetActive(false);
+        AddObjectiveAmount(0);
     }
     void Update()
     {
-        if (EnemyList.Count < enemyAmount_temp + skeletonAmount_temp && Objective_amount >= 0)
+        if (EnemyList.Count < enemyAmount_temp + skeletonAmount_temp && Objective_amount > 0)
         {
             int rand = Random.Range(1, 3);
-            Debug.Log(rand + "   Random");
             if (rand == 1)
             {
                 enemyAmount++;
@@ -62,20 +68,52 @@ public class GameController : MonoBehaviour
         }
         else if (Objective_amount == 0)
         {
+            if (EnemyList.Count > 0)
+            {
+                GameObject target = EnemyList.ElementAt(0);
+                try
+                {
+                    EnemyHP.transform.GetChild(0);
+                    Destroy(EnemyHP.transform.GetChild(0).gameObject);
+                }
+                catch
+                {
+
+                }
+                Destroy(target);
+                EnemyList.Remove(target);
+
+                if (EnemyList.Count == 0)
+                {
+                    if (floor == 10)
+                    {
+                        SceneManager.LoadScene(0);
+                    }
+                    Buff.SetActive(true);
+                }
+            }
             NextStagePortal.SetActive(true);
+            gate.SetActive(false);
         }
     }
     void SpawnEnemy(GameObject enemy, ref int enemyAmount)
     {
         if (enemyAmount > 0)
         {
-            float angle = Random.Range(0, 360);
-            float radias = 8f;
-            float x = Mathf.Cos(angle) * radias;
-            float y = Mathf.Sin(angle) * radias;
-            Enemy_SpawnPoint = new Vector2(x + player.transform.position.x, y + player.transform.position.y);
-            InstantiateEnemy(Enemy_SpawnPoint, enemy);
-            enemyAmount--;
+            if (floor == 10)
+            {
+                float index = Random.Range(0, Enemy_SpawnPoint.Count - 1);
+                GameObject boss = InstantiateEnemy(Enemy_SpawnPoint.ElementAt((int)index), enemy);
+                boss.transform.localScale = new Vector2(4f, 4f);
+                enemyAmount--;
+            }
+            else
+            {
+                float index = Random.Range(0, Enemy_SpawnPoint.Count - 1);
+                InstantiateEnemy(Enemy_SpawnPoint.ElementAt((int)index), enemy);
+                enemyAmount--;
+            }
+
         }
     }
     GameObject InstantiateEnemy(Vector2 Enemy_SpawnPoint, GameObject enemy)
@@ -104,7 +142,7 @@ public class GameController : MonoBehaviour
     GameObject Instantiate_Hp_Bar(GameObject Enemy)
     {
         GameObject hp_Bar = Instantiate(Hp_Bar,
-                            Enemy_SpawnPoint,
+                            Enemy.transform.position,
                             Quaternion.identity,
                             GameObject.Find("Canvas/Enemy_Hp_Bar").transform
                             );
@@ -127,6 +165,9 @@ public class GameController : MonoBehaviour
     public void AddCoin(int value)
     {
         Coin += value;
+        UpdateCoin();
+    }
+    public void UpdateCoin(){
         Coin_txt.text = "Coin: " + Coin.ToString();
     }
     public void AddObjectiveAmount(int value)
@@ -138,12 +179,12 @@ public class GameController : MonoBehaviour
             return;
         }
         Objective_amount -= value;
-        Objective_txt.text = Objective_amount.ToString() + "Enemy eliminate to next floor.";
+        Objective_txt.text = Objective_amount.ToString() + " Enemy eliminate to next floor.";
 
     }
 
     public void ReloadScene()
     {
-        SceneManager.LoadScene(0, LoadSceneMode.Single);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
     }
 }

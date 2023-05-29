@@ -9,7 +9,7 @@ public class AbilityHolderRepeat : MonoBehaviour
     public Ability ability;
     [SerializeField] private GameObject SamplePrefab;
     [SerializeField] private GameObject sampleArea;
-    private float cd_time;
+    public float cd_time;
     private float active_time;
     [SerializeField] private int repeat;
     private float repeat_time;
@@ -40,7 +40,7 @@ public class AbilityHolderRepeat : MonoBehaviour
     {
         cam = Camera.main;
         InitialSample();
-
+        ability.cd_time = 15f;
     }
     void Update()
     {
@@ -123,17 +123,7 @@ public class AbilityHolderRepeat : MonoBehaviour
             sampleArea.transform.position = mousePos;
         }
     }
-    // public void Is_Performed(InputAction.CallbackContext context)
-    // {
-    //     if (context.performed)
-    //     {
-    //         Is_performed = true;
-    //     }
-    //     else if (context.canceled)
-    //     {
-    //         Is_performed = false;
-    //     }
-    // }
+ 
     public void Is_Performed()
     {
         Is_performed = true;

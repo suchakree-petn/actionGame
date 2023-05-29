@@ -23,10 +23,7 @@ public class applySelection : MonoBehaviour
             {
                 gameControllerSpecialStage.Is_firstTurn = false;
             }
-            // else
-            // {
-            //     gameControllerSpecialStage.stage_Stage.fight_time = gameControllerSpecialStage.stage_Stage.fight_time_temp;
-            // }
+            
             gameControllerSpecialStage.stage_Stage.fight_time_temp = gameControllerSpecialStage.stage_Stage.fight_time;
 
             gameControllerSpecialStage.stage_Stage.state = 1;

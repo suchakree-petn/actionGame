@@ -32,10 +32,8 @@ public class Bone_Attack : MonoBehaviour
             {
                 //Debug.Log("Player parrying");
                 Destroy(gameObject);
-                Destroy(fireBlast.barrier);
                 fireBlast.Is_Parry = false;
                 fireBlast.InstantiateFireRing();
-
             }
     }
 }

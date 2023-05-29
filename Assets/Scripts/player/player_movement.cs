@@ -32,7 +32,6 @@ public class player_movement : MonoBehaviour
         {
             Can_Walk = true;
         }
-
         movement = player.playerInputActions.Player_Movement.walk.ReadValue<Vector2>();
         if (movement != Vector2.zero && Can_Walk)
         {
@@ -45,11 +44,6 @@ public class player_movement : MonoBehaviour
     void FixedUpdate()
     {
         resetWalkAnimState();
-
-        //CheckWalkCondition();
-
-
-
     }
 
     public void CheckWalkCondition(Vector2 movement)

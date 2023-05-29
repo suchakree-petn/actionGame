@@ -8,11 +8,6 @@ public class UltimateSkill : Ability
     public float increaseAtkSpd;
     public int increasePenetrateCount;
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     public override void Activate(GameObject parent)
     {
 

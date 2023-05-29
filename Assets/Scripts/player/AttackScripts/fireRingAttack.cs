@@ -17,6 +17,7 @@ public class fireRingAttack : MonoBehaviour
         IDamageable damageable = other.GetComponent<IDamageable>();
         if (damageable != null && (!other.CompareTag("Player")))
         {
+            ScreenShake.Shake();
             damageable.DamageReceive(fireRingWeapon.dmg);
             damageable.knockBack(gameObject, fireRingWeapon.knockBackRange);
             StartCoroutine(IEnum.IFrame(GetComponent<Collider2D>(), other,hit_cd));

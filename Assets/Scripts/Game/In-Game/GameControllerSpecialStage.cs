@@ -47,9 +47,7 @@ public class GameControllerSpecialStage : MonoBehaviour
         {
             EnemyTurn(logic_Minimax.bestMove());
         }
-        // if (Is_Skeleton_Die())
-        // {
-        // }
+    
     }
     bool Is_Skeleton_Die()
     {

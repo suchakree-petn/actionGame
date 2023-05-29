@@ -24,5 +24,12 @@ public class Barrier : MonoBehaviour
         fireBlast.Is_Parry = false;
 
     }
-
+    public void enableCollider()
+    {
+        GetComponent<Collider2D>().enabled = true;
+    }
+    public void disableCollider()
+    {
+        GetComponent<Collider2D>().enabled = false;
+    }
 }

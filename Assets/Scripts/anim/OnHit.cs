@@ -6,7 +6,7 @@ public class OnHit : StateMachineBehaviour
 {
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-       
+       //animator.GetComponentInChildren<Animator>().SetTrigger("hitFx");;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

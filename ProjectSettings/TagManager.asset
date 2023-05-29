@@ -22,9 +22,9 @@ TagManager:
   - Enemy
   - Obstacle
   - Ground
-  - 
-  - 
-  - 
+  - border
+  - enemyBorder
+  - playerBorder
   - 
   - 
   - 
@@ -54,15 +54,15 @@ TagManager:
   - name: UI
     uniqueID: 1495667049
     locked: 0
+  - name: Obstacle
+    uniqueID: 2038961185
+    locked: 0
   - name: enemy
     uniqueID: 1647365343
-    locked: 0
-  - name: playerAttack
-    uniqueID: 2961402743
     locked: 0
   - name: player
     uniqueID: 1661686677
     locked: 0
-  - name: Obstacle
-    uniqueID: 2038961185
+  - name: playerAttack
+    uniqueID: 2961402743
     locked: 0

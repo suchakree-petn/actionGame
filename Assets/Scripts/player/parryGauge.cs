@@ -12,6 +12,7 @@ public class parryGauge : MonoBehaviour
     public Button button;
     public Camera cam;
     public bool Is_SuccessParry;
+    public FireBlast fireBlast;
 
     void Start()
     {
@@ -22,12 +23,7 @@ public class parryGauge : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
 
-
-    }
     public void DeactiveGauge()
     {
         if (parryCount > 0)
@@ -37,10 +33,7 @@ public class parryGauge : MonoBehaviour
             parryGaugeArr[parryCount].SetActive(false);
             SetActiveButton(parryCount);
         }
-        else
-        {
-            //Debug.Log(parryCount);
-        }
+
     }
     public void ActiveGauge()
     {
@@ -49,11 +42,6 @@ public class parryGauge : MonoBehaviour
             parryGaugeArr[parryCount].SetActive(true);
             parryCount++;
             SetActiveButton(parryCount);
-        }
-        else
-        {
-            //Debug.Log(parryCount);
-
         }
     }
     public void DeactiveAllGauge()
@@ -78,23 +66,30 @@ public class parryGauge : MonoBehaviour
     public void OnSuccesParry()
     {
         StartCoroutine(DelayRestoreCamSize());
-
     }
     IEnumerator DelayRestoreCamSize()
     {
         if (cam.name != "ZoomOutCam")
         {
-            cam.orthographicSize = 5f;
+            cam.orthographicSize = 4.5f;
             Time.timeScale = 0f;
             yield return new WaitForSecondsRealtime(.7f);
             Time.timeScale = 1f;
-            cam.orthographicSize = 6.5f;
+            cam.orthographicSize = 5f;
+            if (fireBlast.barrier != null)
+            {
+                Destroy(fireBlast.barrier);
+            }
         }
         else
         {
             Time.timeScale = 0f;
             yield return new WaitForSecondsRealtime(.7f);
             Time.timeScale = 1f;
+            if (fireBlast.barrier != null)
+            {
+                Destroy(fireBlast.barrier);
+            }
         }
 
     }

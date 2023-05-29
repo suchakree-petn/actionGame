@@ -33,7 +33,13 @@ public class MoveToTarget : StateMachineBehaviour
         }
         check_atk_range(animator);
     }
-
+    private void check_atk_range(Animator animator)
+    {
+        if (Vector2.Distance(thisPos.position, target.position) <= attackRange)
+        {
+            animator.SetTrigger("PrepAttack");
+        }
+    }
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
@@ -51,11 +57,5 @@ public class MoveToTarget : StateMachineBehaviour
     //{
     //    // Implement code that sets up animation IK (inverse kinematics)
     //}
-    private void check_atk_range(Animator animator)
-    {
-        if (Vector2.Distance(thisPos.position, target.position) <= attackRange)
-        {
-            animator.SetTrigger("PrepAttack");
-        }
-    }
+
 }

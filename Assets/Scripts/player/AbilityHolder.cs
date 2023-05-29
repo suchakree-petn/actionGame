@@ -25,10 +25,6 @@ public class AbilityHolder : MonoBehaviour
     }
     public AbilityState state = AbilityState.ready;
 
-    void Start()
-    {
-        //player.playerInputActions.Player_Attack.Skill01.performed += context => UseSkill();
-    }
 
     void Update()
     {
@@ -64,7 +60,6 @@ public class AbilityHolder : MonoBehaviour
                 }
                 else
                 {
-                    //ability.BeginCooldown(gameObject);
                     state = AbilityState.cd;
                     cd_time = ability.cd_time;
                 }

@@ -17,7 +17,6 @@ public class stage_stage : MonoBehaviour
     void Start()
     {
         state = 0;
-        //StartCoroutine(wait(wait_Time));
         Player = GameObject.FindWithTag("Player").GetComponent<Player>();
     }
 

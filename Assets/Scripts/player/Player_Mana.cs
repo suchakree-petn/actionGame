@@ -8,10 +8,10 @@ public class Player_Mana : MonoBehaviour
     public Slider mana_body;
     public float max_mana;
     public float mana;
+    public float manaRegen;
 
     void Start()
     {
-        mana =0;
         mana_body.maxValue = max_mana;
         mana_body.value = mana;
     }
@@ -23,7 +23,7 @@ public class Player_Mana : MonoBehaviour
         }
         else
         {
-            mana += 0.01f;
+            mana += manaRegen;
             UpdatePlayerMana();
         }
     }

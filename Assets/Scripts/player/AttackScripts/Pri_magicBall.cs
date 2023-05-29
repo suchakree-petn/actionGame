@@ -12,15 +12,13 @@ public class Pri_magicBall : MonoBehaviour
     public float hit_cd = 1f;
     public int penetrateCount;
     public GameObject player;
+    public AudioSource fire;
 
 
-    void Awake()
-    {
-
-        //rb = GetComponent<Rigidbody2D>();
-    }
     void Start()
     {
+        fire = GetComponent<AudioSource>();
+        fire.Play();
         Destroy(gameObject, selfDestructTime);
     }
 
@@ -36,6 +34,7 @@ public class Pri_magicBall : MonoBehaviour
             }
             if (damageable != null && (!other.CompareTag("Player")))
             {
+                ScreenShake.Shake();
                 damageable.DamageReceive(this.dmg);
                 damageable.knockBack(this.gameObject, knockBackRange);
                 StartCoroutine(IEnum.IFrame(GetComponent<Collider2D>(), other, hit_cd));

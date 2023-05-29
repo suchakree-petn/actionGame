@@ -12,12 +12,12 @@ public class EnemyState : MonoBehaviour, IDamageable
     public Skeleton_Attack skeleton_Attack;
     public float hp;
     public Player player;
-    //[SerializeField] private bool Is_KnockBack;
     [SerializeField] Vector3 Player_Pos;
-    //[SerializeField] private bool Is_Die = false;
     [SerializeField] private GameObject canvas;
     public GameController gameController;
     public AudioSource audioSource;
+    public Animator hitFx;
+
     void Awake()
     {
         rbEnemy = GetComponent<Rigidbody2D>();
@@ -43,7 +43,10 @@ public class EnemyState : MonoBehaviour, IDamageable
 
     public void DamageReceive(float dmg)
     {
-
+        if (hitFx != null)
+        {
+            hitFx.SetTrigger("hitFx");
+        }
         hp -= dmg;
         audioSource.Play();
         animator.SetBool("Is_attack", false);
@@ -53,12 +56,16 @@ public class EnemyState : MonoBehaviour, IDamageable
     }
     public void SetHp()
     {
-        Enemy_Hp.GetComponent<Slider>().value = hp;
-        if (hp <= 0)
+        if (Enemy_Hp != null)
         {
-            //Is_Die = true;
-            OnDie();
+            Enemy_Hp.GetComponent<Slider>().value = hp;
+            if (hp <= 0)
+            {
+                //Is_Die = true;
+                OnDie();
+            }
         }
+
     }
     private void OnDie()
     {

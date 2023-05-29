@@ -14,10 +14,7 @@ public class enemy_movement : MonoBehaviour
         enemy_Attack_1 = GetComponent<enemy_attack_1>();
         target = enemy.player.transform;
     }
-    void Update()
-    {
 
-    }
     void FixedUpdate()
     {
 
@@ -29,8 +26,6 @@ public class enemy_movement : MonoBehaviour
                             enemy_Attack_1.atk_range
                             );
         float currentDistance = calcDistance();
-        //Debug.DrawRay(this_Pos, direction, Color.green);
-
         if (enemy.animator.GetBool("Is_attack") == false && currentDistance >= enemy_Attack_1.atk_range)
         {
 
@@ -42,6 +37,14 @@ public class enemy_movement : MonoBehaviour
 
     void move_toward_player(Vector3 this_Pos)
     {
+        if (target.transform.position.x < transform.position.x)
+        {
+            enemy.spriteRenderer.flipX = true;
+        }
+        else
+        {
+            enemy.spriteRenderer.flipX = false;
+        }
         transform.position = Vector2.MoveTowards(this_Pos, target.position, enemy_move_speed * Time.deltaTime);
 
     }

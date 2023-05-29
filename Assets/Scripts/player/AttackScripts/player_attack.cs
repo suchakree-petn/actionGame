@@ -10,7 +10,7 @@ public class player_attack : MonoBehaviour
     [SerializeField] private GameObject pointerAttack;
     [SerializeField] private Vector2 mousePos;
     private Vector2 direction;
-    private float angle;
+    public float angle;
     public float attackSpd = 0.1f;
     public float chargeSpeed = 1f;
     public float chargeTime;
@@ -19,11 +19,8 @@ public class player_attack : MonoBehaviour
     public float minCharge = 0.02f;
     public bool Is_priChargeCD = false;
     public bool Is_reloadScript = false;
-    public bool Is_hold;
     public bool Can_Attack = true;
     public int chargeState = 0;
-
-
     [SerializeField] private player_movement player_Movement;
     private Player player;
     public Player_Mana player_Mana;
@@ -47,10 +44,9 @@ public class player_attack : MonoBehaviour
         {
             Is_charge = false;
         }
-        //mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
         if (Is_charge)
         {
-            direction = mousePos; // - (Vector2)transform.position;
+            direction = mousePos;
             angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             if (Can_Attack)
             {
@@ -62,27 +58,10 @@ public class player_attack : MonoBehaviour
         if (chargeTime > 0 && Is_charge == false)
         {
             Primary_Attack();
-            //Is_charge = false;
-            //player_Movement.Can_Walk = true;
             AfterPriAttack();
-
-        }
-        // else
-        // {
-        //     player_Movement.Can_Walk = true;
-        // }
-
-
-
-
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            Debug.Log("Right click");
         }
 
     }
-
 
 
 
@@ -95,19 +74,11 @@ public class player_attack : MonoBehaviour
             if (Is_charge && Is_priChargeCD == false)
             {
                 charging();
-                //player_Movement.Can_Walk = false;
-                // if (Is_charge == false)
-                // {
-
-
-                // }
             }
         }
         else if (Is_reloadScript == true)
         {
-            Debug.Log("Reload??");
             chargeTime = 0;
-            //Is_charge = false;
             player_Movement.Invoke("EnableCanMove", 0.5f);
             AfterPriAttack();
             Is_reloadScript = false;
@@ -129,17 +100,19 @@ public class player_attack : MonoBehaviour
                                     transform.position,
                                     Quaternion.identity,
                                     transform);
-        pointerAttack.SetActive(false);
     }
     void charging()
     {
         pointerAttack.SetActive(true);
         pointerAttack.GetComponent<Rigidbody2D>().rotation = angle - 90f;
         pointerAttack.transform.position = transform.position;
-        if (chargeTime < maxCharge)
+        if (chargeTime < maxCharge + 2f)
         {
-            chargeTime += Time.deltaTime * chargeSpeed;
-            player_Mana.AddMana(0.03f);
+            if (chargeTime < maxCharge)
+            {
+                chargeTime += Time.deltaTime * chargeSpeed;
+                player_Mana.AddMana(0.03f);
+            }
         }
         else
         {
@@ -153,9 +126,9 @@ public class player_attack : MonoBehaviour
         SetChargeState();
         GameObject magicBall = Instantiate_Pri_magicBall();
         SetAngle(magicBall);
-
+        chargeState = 1;
     }
-    void CheckChargeState()
+    public void CheckChargeState()
     {
         if (chargeTime > maxCharge)
         {
@@ -166,29 +139,31 @@ public class player_attack : MonoBehaviour
             chargeTime = minCharge;
         }
     }
-    void SetChargeState()
+    public void SetChargeState()
     {
-        if (chargeTime < 0.5f)
+        if (chargeTime < 1f)
         {
             chargeState = 1;
         }
-        else if (chargeTime >= 0.5f && chargeTime < 1.5f)
+        else if (chargeTime >= 1f && chargeTime < 2f)
         {
             chargeState = 2;
         }
-        else if (chargeTime >= 1.5 && chargeTime <= 2f)
+        else if (chargeTime >= 2f && chargeTime <= 3f)
         {
             chargeState = 3;
         }
     }
     public GameObject Instantiate_Pri_magicBall()
     {
-        GameObject magicBall = Instantiate(priMagicBall, transform.position, transform.rotation);
+        GameObject magicBall = Instantiate(priMagicBall, pointerAttack.transform.GetChild(0).position, pointerAttack.transform.GetChild(0).rotation);
         Pri_magicBall pri_MagicBall = magicBall.GetComponent<Pri_magicBall>();
-        magicBall.transform.localScale += new Vector3(0f, Mathf.Pow(2f, chargeTime), 0f);
+        float size = Mathf.Pow(2f, chargeTime + 1f);
+        magicBall.transform.localScale = new Vector3(size, size, size);
         float sizeMultipler = chargeState;
         pri_MagicBall.SetDmg(0.3f * sizeMultipler * sizeMultipler * pri_MagicBall.GetDmg());
         pri_MagicBall.penetrateCount = chargeState;
+        magicBall.GetComponent<Animator>().SetInteger("State", chargeState);
         return magicBall;
     }
     public void SetAngle(GameObject magicBall)
@@ -213,10 +188,4 @@ public class player_attack : MonoBehaviour
     {
         this.Is_priChargeCD = false;
     }
-    // void OnEnable(){
-    //     Is_reloadScript =false;
-    // }
-
-
-
 }

@@ -30,6 +30,8 @@ public class Player : MonoBehaviour, IDamageable
     public GameOver gameOver;
     public GameObject playerHP_Mana;
     public GameObject parryGauge;
+    public Animator hitFx;
+
 
     void Awake()
     {
@@ -73,6 +75,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         if (Is_player_die == false && Is_immortal == false)
         {
+            ScreenShake.Shake();
             hp -= dmg;
             Check_Is_Die();
             SetHp();
@@ -82,12 +85,11 @@ public class Player : MonoBehaviour, IDamageable
             {
                 player_Attack.Is_reloadScript = true;
             }
+            if (hitFx != null)
+            {
+                hitFx.SetTrigger("hitFx");
+            }
         }
-        else
-        {
-            //Debug.Log("Immortal");
-        }
-
     }
     private void Check_Is_Die()
     {

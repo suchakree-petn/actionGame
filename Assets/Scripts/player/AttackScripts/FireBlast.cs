@@ -48,7 +48,7 @@ public class FireBlast : Ability
                     Player.transform.position,
                     Quaternion.identity
                    );
-        fireRingInstance.transform.localScale += new Vector3(6f, 6f, 0);
+        fireRingInstance.transform.localScale += new Vector3(8f, 8f, 0);
         Destroy(fireRingInstance, active_time);
     }
 
